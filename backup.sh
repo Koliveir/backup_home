@@ -7,42 +7,50 @@ clear
 DATAHORA=$(date +%Y%m%d%H%M)
 PASTA="$HOME/Backup"
 CHECKDIA=$(find $HOME/Backup/ -mtime -7 -iname "backup_home_*.tar.gz")
-#CHECKDIA=$(find $HOME -mtime -7 -iname "*.pdf")
 
-
+#VERIFICANDO SE O DIRETORIO BACKUP EXISTE, CASO NÃO SERÁ CRIADO
 if [ ! -d $PASTA ]; then
-    echo "parte1"
+    echo "Criando diretório de backup.."
+	sleep 1
     mkdir -p $HOME/Backup
 fi
 
+#VERIFICA SE JÁ EXISTEM BACKUPS NOS ÚLTIMOS 7 DIAS, CASO EXISTE SERÁ INFORMADO SE QUER PROSSEGUIR COM O BACKUP
 if [ -z $CHECKDIA ]; then
-    echo "parte2"
     echo "Criando backup, aguarde.."
-    tar --exclude="$HOME/Backup" -czvf $HOME/Backup/teste.tar.gz $HOME
+	sleep 3
+    tar --exclude="$HOME/Backup" -czvf $HOME/Backup/backup_home_$DATAHORA.tar.gz $HOME
     echo "Backup concluído!"
-else
-    echo "parte3"
+	sleep 1
+	find $HOME/Backup -iname "backup_home_$DATAHORA.tar.gz"
+	echo "Backup criado em: "
+	exit 0
+else		
     echo "Já existe um backup do diretório HOME nos últimos 7 dias"
     read -p "Deseja continuar: [N/S]" OPCAO
     case $OPCAO in
         n)
-            echo "parte4"
+            echo "Backup cancelado!"
+			sleep 3
             exit 1
         ;;    
         N)
-            echo "parte5"
-            exit 1 
+            echo "Backup cancelado!"
+			sleep 3
+			exit 1 
         ;;
         s)
-            echo "parte6"
             echo "Criando o backup, aguarde.."
-            tar --exclude="$HOME/Backup" -czvf $HOME/Backup/teste.tar.gz $HOME
+			sleep 3
+            tar --exclude="$HOME/Backup" -czvf $HOME/Backup/backup_home_$DATAHORA.tar.gz $HOME
             echo "Backup concluído"
+			sleep 1
+			echo "Backup criado em: "
+			find $HOME/Backup -iname "backup_home_$DATAHORA.tar.gz"
+			exit 0
         ;;
         *)
             echo "Opção invalida"
             exit 1
     esac     
 fi    
-
-find -iname "backup_home_$DATAHORA.tar.gz"
