@@ -1,9 +1,22 @@
 #!/bin/bash
 
+################################################################
+#                                                              #
+# backup_home.sh - Script para fazer backup da home do usuário #
+# 							       #
+# Autor: Erick Oliveira (erickoliveira.sp@gmail.com)           #
+#                                                              #
+# Data da criação: 26/03/2022                                  #
+#                                                              #
+# Descrição: Script para fazer backup da home do usuário       #
+#                                                              #
+# Exemplo de uso: ./backup_home.sh                             #
+#                                                              #
+################################################################
+
 clear
 
 #DECLARAÇÃO DE VARIAVEIS
-
 DATAHORA=$(date +%Y%m%d%H%M)
 PASTA="$HOME/Backup"
 CHECKDIA=$(find $HOME/Backup/ -mtime -7 -iname "backup_home_*.tar.gz")
